@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Profile from './components/Profile'
 import github from './images/github-logo.png';
 import linkedin from './images/linked-in.png';
+import CreateCourse from './components/CreateCourse';
 
 import { NavLink, Link, Routes, Route } from 'react-router-dom'; 
 
@@ -24,6 +25,7 @@ function App() {
         <Route path='/login' element={<Login />}/>
         <Route path='/profile' element={<Profile />}/> 
         <Route path='/' element={<HomePage />}/>
+        <Route path='/createcourse' element={<CreateCourse />}/>
       </Routes>
       <div className='a-tags'>
         <a href='https://github.com/LukaG7' target='_blank'><img className='git-linked-img' src={github}/></a>
