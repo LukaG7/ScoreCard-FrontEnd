@@ -30,7 +30,11 @@ function CreateCourse(){
 
     function handleSubmit(event){
         event.preventDefault()
-        axios.post('http://localhost:3001/signup', state)
+        const body = {
+            ...state,
+            holes: holesState
+        }
+        axios.post('http://localhost:3001/createcourse', body)
         .then(res => console.log(res.data))
         .catch(err => console.log(err))
     }
@@ -41,9 +45,10 @@ function CreateCourse(){
         setHolesState([...holesState, { par: '', yardage: '' }])
     }
 
+
     return(
         <div>
-        <form>
+        <form onSubmit={handleSubmit}>
             <label>Course Name</label>
             <input value={state.courseName} name='courseName' onChange={updateState}/>   
             <label>Course Image</label>
@@ -51,17 +56,19 @@ function CreateCourse(){
             <div>
                 <h2>Course Holes</h2>
                 <button onClick={addHole}>Add Hole</button>
+                <button type='submit'>Add Course</button>
                 <div>
                     {holesState.map((singleHole, index) => {
                         return(
-                            <div>
-                                <span>Hole Number: {index + 1}</span>
+                            <div className='hole-list'>
+                                <span>Hole {index + 1}</span>
                                 <label>Par</label>
                                 <input value={singleHole.par} name='par' onChange={updateHolesState(index)} />
                                 <label>Yardage</label>
                                 <input value={singleHole.yardage} name='yardage' onChange={updateHolesState(index)} />
-                                <button onClick={deleteHole(index)}>Delete hole</button>
+                                <button onClick={deleteHole(index)}>Delete hole</button>                                
                             </div>
+                                
                         )
                     })}
                 </div>

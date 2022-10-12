@@ -1,14 +1,21 @@
+import { useContext } from "react";
+import { AuthContext } from "../context/auth.context";
+import { Navigate } from "react-router-dom";
 
+function Profile( { children } ) {
+  
+  const { isLoggedIn, isLoading } = useContext(AuthContext);
 
-function Profile(){
-    return(
-    <div>
-        <h1>welcome to ur profile</h1>
-        <form className="logout-button buttons" id="logout-form" action="/" method="POST">
-            <button className="button-34" role="button">Logout</button>
-        </form>
-    </div>
-    )
+  // If the authentication is still loading 
+  if (isLoading) return <p>Loading ...</p>;
+
+  if (!isLoggedIn) {
+  // If the user is not logged in 
+    return <Navigate to="/login" />;
+  } else {
+  // If the user is logged in, allow to see the page 
+    return children;
+  }
 }
 
 export default Profile;

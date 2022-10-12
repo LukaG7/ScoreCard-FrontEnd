@@ -1,39 +1,68 @@
-import axios from 'axios';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useContext } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
+ 
+const API_URL = "http://localhost:3001";
+ 
+ 
+function Login(props) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
-function Login(){
+  const { storeToken, authenticateUser } = useContext(AuthContext)
+  
+  const navigate = useNavigate();
+ 
+  const handleUsername = (e) => setUsername(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value);
+ 
 
-    const [ state, setState ] = useState({ username: '', password: '' })
-
-    function updateState(event){
-        setState({...state, [event.target.name]: event.target.value}) 
-    }
-
-    function handleSubmit(event){
-        event.preventDefault()
-        axios.post('http://localhost:3001/login', state)
-        .then(res => {
-            console.log(res.navigate)
-            navigate('/profile')
-        })
-        .catch(err => console.log(err))
-    }
-
-    const navigate = useNavigate()
-
-    return(
-        <div>
-            <h1 className='log-sign-h1'>Login To Your Account</h1>
-            <form className='log-sign-form' onSubmit={handleSubmit}>
-                <label>Username</label>
-                <input name='username' value={state.username} onChange={updateState} type="text"/>
-                <label>Password</label>
-                <input name='password' value={state.password} onChange={updateState} type="password" />
-                <button className='log-sign-btn' type="submit">Submit</button>
-            </form>
-        </div>
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    const requestBody = { username, password };
+ 
+    axios.post(`${API_URL}/login`, requestBody)
+      .then((response) => {
+        console.log('JWT token', response.data.authToken );
+        storeToken(response.data.authToken)
+        authenticateUser();
+        navigate('/profile');   
+      })
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+        setErrorMessage(errorDescription);
+      })
+};
+  return (
+      
+    <div className="LoginPage">
+      <h1 className="log-sign-h1">Login To Your Account</h1>
+ 
+      <form className="log-sign-form" onSubmit={handleLoginSubmit}>
+        <label>Username:</label>
+        <input 
+          type="text"
+          name="username"
+          value={username}
+          onChange={handleUsername}
+        />
+ 
+        <label>Password:</label>
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={handlePassword}
+        />
+ 
+        <button className="log-sign-btn" type="submit">Login</button>
+      </form>
+      { errorMessage && <p className="error-message">{errorMessage}</p> }
+    </div>
     )
+  
 }
-
+ 
 export default Login;
