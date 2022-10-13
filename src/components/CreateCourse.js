@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth.context';
+import { Navigate } from 'react-router';
 
 function CreateCourse(){
 
@@ -45,39 +48,52 @@ function CreateCourse(){
         setHolesState([...holesState, { par: '', yardage: '' }])
     }
 
+    const { isLoggedIn, isLoading } = useContext(AuthContext);
 
-    return(
-        <div>
-        <form onSubmit={handleSubmit}>
-            <label>Course Name</label>
-            <input value={state.courseName} name='courseName' onChange={updateState}/>   
-            <label>Course Image</label>
-            <input value={state.courseImg} name='courseImg' onChange={updateState}/>
-            <div>
-                <h2>Course Holes</h2>
-                <button onClick={addHole}>Add Hole</button>
-                <button type='submit'>Add Course</button>
-                <div>
-                    {holesState.map((singleHole, index) => {
-                        return(
-                            <div className='hole-list'>
-                                <span>Hole {index + 1}</span>
-                                <label>Par</label>
-                                <input value={singleHole.par} name='par' onChange={updateHolesState(index)} />
-                                <label>Yardage</label>
-                                <input value={singleHole.yardage} name='yardage' onChange={updateHolesState(index)} />
-                                <button onClick={deleteHole(index)}>Delete hole</button>                                
-                            </div>
-                                
-                        )
-                    })}
+    if (isLoading) return <p>Loading ...</p>;
+
+    if (!isLoggedIn) {
+        return <Navigate to="/signup" />;
+    } else {
+        return(
+            <div className='create-course-div'>
+            <form onSubmit={handleSubmit}>
+                <div className='name-image'>
+                    <label>Course Name</label>
+                    <input value={state.courseName} name='courseName' onChange={updateState}/>   
+                    <label>Course Image</label>
+                    <input value={state.courseImg} name='courseImg' onChange={updateState}/>
                 </div>
-            </div>
-        </form>
 
-        </div>
-        
-    )
+                <div>
+                    <h2>Course Holes</h2>
+                    <button className='hole-coursebtn' onClick={addHole}>Add Hole</button>
+                    <button className='hole-coursebtn' type='submit'>Add Course</button>
+                    <div>
+                        {holesState.map((singleHole, index) => {
+                            return(
+                                <div className='hole-list'>
+                                    <span>Hole {index + 1}</span>
+                                    <label>Par</label>
+                                    <input value={singleHole.par} name='par' onChange={updateHolesState(index)} />
+                                    <label>Yardage</label>
+                                    <input value={singleHole.yardage} name='yardage' onChange={updateHolesState(index)} />
+                                    <button className='hole-coursebtn' onClick={deleteHole(index)}>Delete hole</button>                                
+                                </div>
+                                    
+                            )
+                        })}
+                    </div>
+                </div>
+            </form>
+    
+            </div>
+            
+        )
+    }
+
+
+    
 }
 
 export default CreateCourse;

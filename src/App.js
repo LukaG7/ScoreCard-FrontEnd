@@ -5,6 +5,8 @@ import Login from './components/Login';
 import Profile from './components/Profile'
 import CreateCourse from './components/CreateCourse';
 import Navbar from './components/Navbar';
+import Scoring from './components/Scoring';
+import ScoringTable from './components/ScoringTable';
 
 import { NavLink, Link, Routes, Route } from 'react-router-dom'; 
 
@@ -18,6 +20,8 @@ function App() {
         <Route path='/profile' element={<Profile />}/> 
         <Route path='/' element={<HomePage />}/>
         <Route path='/createcourse' element={<CreateCourse />}/>
+        <Route path='/scoring' element={<Scoring />}/>
+        <Route path='/scoringtable' element={<ScoringTable />}/>
       </Routes>
     </div>
   );

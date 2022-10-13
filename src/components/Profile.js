@@ -6,15 +6,21 @@ function Profile( { children } ) {
   
   const { isLoggedIn, isLoading } = useContext(AuthContext);
 
-  // If the authentication is still loading 
   if (isLoading) return <p>Loading ...</p>;
 
   if (!isLoggedIn) {
-  // If the user is not logged in 
+
     return <Navigate to="/login" />;
   } else {
-  // If the user is logged in, allow to see the page 
-    return children;
+
+    return (
+        <div className="profile">
+            <h1>"Users" Profile</h1>
+
+            <p>previous rounds below</p>
+            {/* users previous scores */}
+        </div>
+    )
   }
 }
 
