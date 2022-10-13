@@ -13,7 +13,7 @@ const Navbar = () => {
         logOutUser   
       } = useContext(AuthContext);
 
-    return(
+    return (
     <div className='nav'>
         <Link to='/'><img className='golf-logo' src={golfImage}/></Link>
         {isLoggedIn && (
@@ -22,7 +22,7 @@ const Navbar = () => {
             <button className='signup'>Profile</button>
           </Link>
           <button className='logout-hidden' onClick={logOutUser}>Logout</button>
-          <span>{user && user.name}</span>
+          <span>{user.name}</span>
         </div>
       )}
       {!isLoggedIn && (
