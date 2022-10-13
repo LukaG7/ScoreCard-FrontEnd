@@ -37,7 +37,7 @@ function CreateCourse(){
             ...state,
             holes: holesState
         }
-        axios.post('http://localhost:3001/createcourse', body)
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/createcourse`, body)
         .then(res => console.log(res.data))
         .catch(err => console.log(err))
     }

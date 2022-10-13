@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const API_URL = "http://localhost:3001";
+// const API_URL = "http://localhost:3001";
 
 const AuthContext = React.createContext();
 
@@ -20,7 +20,7 @@ function AuthProviderWrapper(props) {
     if (storedToken) {
 
       axios.get(
-        `${API_URL}/verify`, 
+        `${process.env.REACT_APP_BACKEND_URL}/verify`, 
         { headers: { Authorization: `Bearer ${storedToken}`} }
       )
       .then((response) => {

@@ -11,7 +11,7 @@ function SignUp(){
 
     function handleSubmit(event){
         event.preventDefault()
-        axios.post('http://localhost:3001/signup', state)
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/signup`, state)
         .then(res => console.log(res.data))
         .catch(err => console.log(err))
     }

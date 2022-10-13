@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
  
-const API_URL = "http://localhost:3001";
+// const API_URL = "http://localhost:3001";
  
  
 function Login(props) {
@@ -23,7 +23,7 @@ function Login(props) {
     e.preventDefault();
     const requestBody = { username, password };
  
-    axios.post(`${API_URL}/login`, requestBody)
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/login`, requestBody)
       .then((response) => {
         console.log('JWT token', response.data.authToken );
         storeToken(response.data.authToken)

@@ -7,7 +7,7 @@ function Scoring(){
     const [ courseArray, setCourseArray ] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/createcourse/all')
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/createcourse/all`)
         .then(axiosRes => {
             console.log(axiosRes.data)
             setCourseArray(axiosRes.data)
