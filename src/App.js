@@ -21,7 +21,7 @@ function App() {
         <Route path='/' element={<HomePage />}/>
         <Route path='/createcourse' element={<CreateCourse />}/>
         <Route path='/scoring' element={<Scoring />}/>
-        <Route path='/scoringtable' element={<ScoringTable />}/>
+        <Route path='/scoringtable/:paramsId' element={<ScoringTable />}/>
       </Routes>
     </div>
   );

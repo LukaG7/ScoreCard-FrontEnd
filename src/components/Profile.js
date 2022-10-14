@@ -15,9 +15,9 @@ function Profile( { children } ) {
 
     return (
         <div className="profile">
-            <h1>"Users" Profile</h1>
+            <h1>My Profile</h1>
 
-            <p>previous rounds below</p>
+            <p></p>
             {/* users previous scores */}
         </div>
     )
